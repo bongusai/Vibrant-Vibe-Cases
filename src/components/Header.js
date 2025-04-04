@@ -32,7 +32,7 @@ function Header(props) {
     if (!currentUser) return;
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/cart/${currentUser.id}`
+        `https://vibrant-vibe-cases.onrender.com/api/cart/${currentUser.id}`
       );
       const cartItems = response.data.items || [];
       const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);

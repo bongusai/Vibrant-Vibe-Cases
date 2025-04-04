@@ -4,7 +4,11 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+<<<<<<< HEAD
 //const { Password } = require("@mui/icons-material");
+=======
+// const { Password } = require("@mui/icons-material");
+>>>>>>> 9dc9c88 (Updated frontend and backend)
 const nodemailer = require("nodemailer");
 const multer = require('multer');
 const path = require('path');

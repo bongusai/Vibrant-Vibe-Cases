@@ -24,7 +24,7 @@ import {
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://vibrant-vibe-cases.onrender.com/api";
 
 const validateField = (name, value, formData, imageFile) => {
   switch (name) {

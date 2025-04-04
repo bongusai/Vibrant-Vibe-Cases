@@ -39,7 +39,7 @@ function AdminPanel() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const API_BASE_URL = process.env.REACT_APP_DIPLOYED_BACKEND_URL || "http://localhost:5000/api";
+  const API_BASE_URL = process.env.REACT_APP_DIPLOYED_BACKEND_URL || "https://vibrant-vibe-cases.onrender.com/api";
 
   useEffect(() => {
     const scriptId = "google-translate-script";

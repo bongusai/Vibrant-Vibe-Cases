@@ -26,7 +26,7 @@ import MultiStepCheckoutForm from "./MultiStepCheckoutForm";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://vibrant-vibe-cases.onrender.com/api";
 
 const EXCHANGE_RATE_INR_TO_CNY = 0.083;
 
@@ -236,7 +236,7 @@ function ProductDetail() {
                   component={motion.img}
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3 }}
-                  src={`http://localhost:5000${product.image}`}
+                  src={`https://vibrant-vibe-cases.onrender.com${product.image}`}
                   alt={product.name}
                   sx={{
                     width: "100%",

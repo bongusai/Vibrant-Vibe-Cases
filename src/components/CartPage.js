@@ -21,7 +21,8 @@ import Header from "./Header.js";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const API_BASE_URL = "http://localhost:5000/api";
+// const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://vibrant-vibe-cases.onrender.com/api";
 const EXCHANGE_RATE_INR_TO_CNY = 0.083;
 
 function CartPage() {
@@ -209,7 +210,7 @@ function CartPage() {
                           <ListItemAvatar>
                             <Avatar
                               alt={item.productId.model || "Product"}
-                              src={`http://localhost:5000${item.productId.image}`}
+                              src={`https://vibrant-vibe-cases.onrender.com${item.productId.image}`}
                               variant="square"
                               sx={{ width: 80, height: 80, mr: 2 }}
                             />

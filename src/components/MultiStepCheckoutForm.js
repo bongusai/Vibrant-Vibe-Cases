@@ -33,7 +33,7 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { toast } from "react-toastify"
 
-const API_BASE_URL = "http://localhost:5000/api"
+const API_BASE_URL = "https://vibrant-vibe-cases.onrender.com/api"
 const EXCHANGE_RATE_INR_TO_CNY = 0.083
 const EXCHANGE_RATE_CNY_TO_INR = 12.048
 

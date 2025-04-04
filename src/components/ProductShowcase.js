@@ -18,7 +18,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const API_BASE_URL =
-  process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+  process.env.REACT_APP_API_URL || "https://vibrant-vibe-cases.onrender.com/api";
 
 // Static exchange rate (INR to CNY) - Replace with API call in production
 const EXCHANGE_RATE_INR_TO_CNY = 0.083;
@@ -219,7 +219,7 @@ function ProductShowcase({ category }) {
                         transform: "scale(1.03)",
                       },
                     }}
-                    image={`http://localhost:5000${product.image}`}
+                    image={`https://vibrant-vibe-cases.onrender.com${product.image}`}
                     alt={product.name}
                   />
                   <CardContent
