@@ -154,7 +154,7 @@ function HeroSection() {
                   alignItems: "center",
                   color: "white",
                   padding: "2rem",
-                  height: "80vh"
+                  minHeight: "100vh"
                 }}
               >
                 <Typography
@@ -187,20 +187,38 @@ function HeroSection() {
                     offset={-70}
                   >
                     <Button
-                      variant="contained"
-                      size="large"
-                      color="secondary"
-                      sx={{
-                        mt: 4,
-                        py: 1.5,
-                        px: 3.5,
-                        fontSize: { xs: "1rem", sm: "1.2rem" },
-                        borderRadius: "8px",
-                        textTransform: "capitalize",
-                      }}
-                    >
-                      Explore Covers
-                    </Button>
+  variant="contained"
+  size="large"
+  color="secondary"
+  sx={{
+    mt: 4,
+    py: 1.5,
+    px: 3.5,
+    fontSize: { xs: "1rem", sm: "1.2rem" },
+    borderRadius: "8px",
+    textTransform: "capitalize",
+    display: "inline-flex",
+    border: "2px solid cyan",
+    color: "cyan",
+    fontWeight: "bold",
+    position: "relative",
+    overflow: "hidden",
+    transition: "0.3s ease-in-out",
+    background: "linear-gradient(45deg, rgba(12, 12, 12, 0.88) 30%, rgba(3, 218, 197, 0.9) 90%)",
+    boxShadow: "0 0 10px rgba(0, 255, 255, 0.5)",
+    "&:hover": {
+      color: "white",
+      background:
+        "linear-gradient(45deg, rgba(255, 140, 0, 0.8) 30%, rgba(255, 69, 0, 0.8) 90%)", // Orange-red gradient on hover
+      boxShadow:
+        "0 0 20px rgba(255, 140, 0, 0.8), 0 0 40px rgba(255, 69, 0, 0.6)", // Adjusted glow effect
+      borderColor: "white",
+    },
+  }}
+>
+  Explore Covers
+</Button>
+
                   </Link>
                 </motion.div>
               </motion.div>

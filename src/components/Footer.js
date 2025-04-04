@@ -4,6 +4,29 @@ import { motion } from 'framer-motion';
 import React from 'react';
 
 function Footer() {
+  const iconStyle = {
+    display: { xs: "none", md: "inline-flex" },
+    border: "2px solid orange",
+    color: "orange",
+    fontSize: "1.8rem", // Reduced size
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    position: "relative",
+    overflow: "hidden",
+    transition: "0.3s ease-in-out",
+    background: "rgba(255, 238, 0, 0.1)",
+    boxShadow: "0 0 10px rgba(255, 238, 0, 0.5)",
+    borderRadius: "50%",
+    padding: "6px", // Reduced padding
+    "&:hover": {
+      color: "white",
+      backgroundColor: "rgba(248, 209, 34, 0.81)",
+      boxShadow: "0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6)",
+      borderColor: "white",
+      transform: "scale(1.1)", // Slight hover scale effect
+    },
+  };
+
   return (
     <Box
       sx={{
@@ -18,20 +41,15 @@ function Footer() {
       <Grid
         container
         spacing={4}
-        justifyContent='center' // Center the content
-        alignItems='center'
-        direction={{ xs: 'column', md: 'row' }} // Stack in column on mobile, row on tablet and desktop
+        justifyContent="center"
+        alignItems="center"
+        direction={{ xs: 'column', md: 'row' }}
       >
         {/* Brand Section */}
         <Grid item xs={12} md={4}>
-          <motion.div
-          // initial={{ opacity: 0, x: -50 }}
-          // whileInView={{ opacity: 1, x: 0 }}
-          // transition={{ duration: 0.8 }}
-          // viewport={{ once: true }}
-          >
+          <motion.div>
             <Typography
-              variant='h6'
+              variant="h6"
               gutterBottom
               sx={{
                 color: 'primary.main',
@@ -39,12 +57,9 @@ function Footer() {
                 textAlign: 'center',
               }}
             >
-              CoverCraft
+              Vibrant vibe case
             </Typography>
-            <Typography
-              variant='body2'
-              sx={{ lineHeight: 1.8, textAlign: 'center' }}
-            >
+            <Typography variant="body2" sx={{ lineHeight: 1.8, textAlign: 'center' }}>
               Elevating device protection since 2025.
             </Typography>
           </motion.div>
@@ -52,14 +67,9 @@ function Footer() {
 
         {/* Contact Section */}
         <Grid item xs={12} md={4}>
-          <motion.div
-          // initial={{ opacity: 0, y: 50 }}
-          // whileInView={{ opacity: 1, y: 0 }}
-          // transition={{ duration: 0.8 }}
-          // viewport={{ once: true }}
-          >
+          <motion.div>
             <Typography
-              variant='h6'
+              variant="h6"
               gutterBottom
               sx={{
                 color: 'primary.main',
@@ -69,13 +79,10 @@ function Footer() {
             >
               Contact Us
             </Typography>
-            <Typography
-              variant='body2'
-              sx={{ lineHeight: 1.8, textAlign: 'center' }}
-            >
+            <Typography variant="body2" sx={{ lineHeight: 1.8, textAlign: 'center' }}>
               <br />
               Phone:{' '}
-              <Link color='inherit'>
+              <Link color="inherit">
                 +91 98765 78765
               </Link>
             </Typography>
@@ -84,14 +91,9 @@ function Footer() {
 
         {/* Social Media Section */}
         <Grid item xs={12} md={4}>
-          <motion.div
-          // initial={{ opacity: 0, x: 50 }}
-          // whileInView={{ opacity: 1, x: 0 }}
-          // transition={{ duration: 0.8 }}
-          // viewport={{ once: true }}
-          >
+          <motion.div>
             <Typography
-              variant='h6'
+              variant="h6"
               gutterBottom
               sx={{
                 color: 'primary.main',
@@ -102,40 +104,21 @@ function Footer() {
               Follow Us
             </Typography>
             <Box
-              sx={{ display: 'flex', gap: 2, justifyContent: 'center', mt: 1 }}
+              sx={{
+                display: 'flex',
+                gap: 2,
+                justifyContent: 'center',
+                mt: 1,
+              }}
             >
-              <Link
-                href='https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F'
-                color='inherit'
-                target='_blank'
-                sx={{
-                  transition: 'transform 0.3s',
-                  '&:hover': { transform: 'scale(1.1)' },
-                }}
-              >
-                <Facebook fontSize='large' />
+              <Link href="https://www.facebook.com/" color="inherit" target="_blank" sx={iconStyle}>
+                <Facebook fontSize="inherit" />
               </Link>
-              <Link
-                href='https://www.instagram.com/?hl=en'
-                target='_blank'
-                color='inherit'
-                sx={{
-                  transition: 'transform 0.3s',
-                  '&:hover': { transform: 'scale(1.1)' },
-                }}
-              >
-                <Instagram fontSize='large' />
+              <Link href="https://www.instagram.com/" color="inherit" target="_blank" sx={iconStyle}>
+                <Instagram fontSize="inherit" />
               </Link>
-              <Link
-                href='https://x.com/?lang=en&mx=2'
-                target='_blank'
-                color='inherit'
-                sx={{
-                  transition: 'transform 0.3s',
-                  '&:hover': { transform: 'scale(1.1)' },
-                }}
-              >
-                <Twitter fontSize='large' />
+              <Link href="https://x.com/" color="inherit" target="_blank" sx={iconStyle}>
+                <Twitter fontSize="inherit" />
               </Link>
             </Box>
           </motion.div>
@@ -143,31 +126,26 @@ function Footer() {
       </Grid>
 
       {/* Footer Links */}
-      <Box mt={4} textAlign='center'>
-        <motion.div
-        // initial={{ opacity: 0, y: 30 }}
-        // whileInView={{ opacity: 1, y: 0 }}
-        // transition={{ duration: 0.8 }}
-        // viewport={{ once: true }}
-        >
-          <Typography variant='body2'>
+      <Box mt={4} textAlign="center">
+        <motion.div>
+          <Typography variant="body2">
             © {new Date().getFullYear()}{' '}
             <Typography
-              component='span'
+              component="span"
               sx={{ fontWeight: 'bold', color: 'primary.main' }}
             >
-              CoverCraft
+        Vibrant vibe case
             </Typography>
             . All rights reserved.
           </Typography>
-          <Typography variant='body2' sx={{ mt: 1 }}>
-            <Link href='#' color='inherit' underline='hover'>
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            {/* <Link href="#" color="inherit" underline="hover">
               Privacy Policy
             </Link>{' '}
             |{' '}
-            <Link href='#' color='inherit' underline='hover'>
+            <Link href="#" color="inherit" underline="hover">
               Terms of Service
-            </Link>
+            </Link> */}
           </Typography>
         </motion.div>
       </Box>

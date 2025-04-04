@@ -1,16 +1,43 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "./components/Header";
-import HeroSection from "./components/HeroSection";
-import USPSection from "./components/USPSection";
-import ProductShowcase from "./components/ProductShowcase";
-import CustomerReviews from "./components/CustomerReviews";
-import LeadCaptureForm from "./components/LeadCaptureForm";
-import BenefitsSection from "./components/BenefitsSection";
-import StatisticalEvidence from "./components/StatisticalEvidence";
-import Footer from "./components/Footer";
+
+// Lazy-load components to improve performance and isolate potential issues
+const Header = lazy(() => import("./components/Header"));
+const HeroSection = lazy(() => import("./components/HeroSection"));
+const USPSection = lazy(() => import("./components/USPSection"));
+const ProductShowcase = lazy(() => import("./components/ProductShowcase"));
+const CustomerReviews = lazy(() => import("./components/CustomerReviews"));
+const LeadCaptureForm = lazy(() => import("./components/LeadCaptureForm"));
+const BenefitsSection = lazy(() => import("./components/BenefitsSection"));
+const StatisticalEvidence = lazy(() => import("./components/StatisticalEvidence"));
+const Footer = lazy(() => import("./components/Footer"));
+
+// Error Boundary Component
+class ErrorBoundary extends React.Component {
+  state = { hasError: false, error: null };
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("ErrorBoundary caught an error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: "20px", color: "#E1E1E1", textAlign: "center" }}>
+          <h1>Something went wrong.</h1>
+          <p>{this.state.error?.message || "Unknown error occurred."}</p>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const theme = createTheme({
   palette: {
@@ -39,17 +66,21 @@ function MobileCoverLandingPage() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="container-fluid p-0">
-        <Header />
-        <HeroSection />
-        <USPSection />
-        <ProductShowcase />
-        <CustomerReviews />
-        <LeadCaptureForm />
-        <BenefitsSection />
-        <StatisticalEvidence />
-        <Footer />
-      </div>
+      <ErrorBoundary>
+        <div className="container-fluid p-0">
+          <Suspense fallback={<div style={{ color: "#E1E1E1", textAlign: "center", padding: "20px" }}>Loading...</div>}>
+            <Header />
+            <HeroSection />
+            <USPSection />
+            <ProductShowcase />
+            <CustomerReviews />
+            <LeadCaptureForm />
+            <BenefitsSection />
+            <StatisticalEvidence />
+            <Footer />
+          </Suspense>
+        </div>
+      </ErrorBoundary>
     </ThemeProvider>
   );
 }

@@ -1,123 +1,111 @@
-import React from "react"
-import { Typography, Box, Avatar, Rating, Container } from "@mui/material"
-import { Carousel } from "react-bootstrap"
-import { motion } from "framer-motion"
-import "bootstrap/dist/css/bootstrap.min.css" // Ensure Bootstrap's CSS is included
+import React from "react";
+import { Typography, Box, Avatar, Rating, Container, Card, CardContent } from "@mui/material";
+import { Carousel } from "react-bootstrap";
+import { motion } from "framer-motion";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const reviews = [
   {
     id: 1,
-    name: "Kusuma Shetty",
-    rating: 5,
-    comment: "Sleek design and unbeatable protection!",
-    avatar: "https://i.pravatar.cc/150?img=1",
+    name: "Sara Williams",
+    rating: 4,
+    comment: "Love the design! It fits perfectly and feels premium.",
+    avatar: "https://i.pravatar.cc/150?img=4",
   },
   {
     id: 2,
-    name: "Pranavi Gupta.",
-    rating: 5,
-    comment: "The customization options are amazing!",
-    avatar: "https://i.pravatar.cc/150?img=2",
+    name: "John Doe",
+    rating: 4,
+    comment: "Fantastic experience, the quality  my expectations.",
+    avatar: "https://i.pravatar.cc/150?img=5",
   },
   {
     id: 3,
-    name: "Kamal Roy.",
+    name: "Emily Clark",
     rating: 5,
-    comment: "Premium quality at a great price.",
-    avatar: "https://i.pravatar.cc/150?img=3",
+    comment: "Absolutely amazing! Great value for the money.",
+    avatar: "https://i.pravatar.cc/150?img=6",
   },
-]
+];
 
 function CustomerReviews() {
   return (
-    <Box sx={{ py: 12, bgcolor: "background.paper" }}>
-      <Container maxWidth="lg">
+    <Box sx={{ py: 12, bgcolor: "#f5f5f5" }}>
+      <Container maxWidth="md">
         <Typography
           variant="h2"
-          component="h2"
-          gutterBottom
           textAlign="center"
-          sx={{
-            color: "primary.main",
-            mb: 8,
-            fontSize: { xs: "2.5rem", sm: "3rem", md: "3.5rem" },
-            fontWeight: "bold",
-          }}
+          sx={{ color: "#333", mb: 8, fontWeight: "bold", fontSize: { xs: "2rem", md: "3rem" } }}
         >
-          Customer Experiences
+          What Our Customers Say
         </Typography>
         <Carousel
-          indicators={true}
           interval={5000}
-          controls={true}
-          nextIcon={<span aria-hidden="true" className="carousel-control-next-icon" />}
-          prevIcon={<span aria-hidden="true" className="carousel-control-prev-icon" />}
-          slide={true}
-          fade={true}
+          controls
+          indicators
+          prevIcon={
+            <span
+              className="carousel-control-prev-icon"
+              aria-hidden="true"
+              style={{ filter: "invert(0)", backgroundColor: "black", borderRadius: "50%", padding: "15px" }}
+            />
+          }
+          nextIcon={
+            <span
+              className="carousel-control-next-icon"
+              aria-hidden="true"
+              style={{ filter: "invert(0)", backgroundColor: "black", borderRadius: "50%", padding: "15px" }}
+            />
+          }
         >
           {reviews.map((review) => (
             <Carousel.Item key={review.id}>
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="text-center p-4"
+                className="d-flex justify-content-center"
               >
-                <Avatar
-                  alt={review.name}
-                  src={review.avatar}
+                <Card
                   sx={{
-                    width: { xs: 120, sm: 150, md: 180 },
-                    height: { xs: 120, sm: 150, md: 180 },
-                    margin: "0 auto",
-                    mb: 4,
-                    border: "4px solid",
-                    borderColor: "primary.main",
-                  }}
-                />
-                <Typography
-                  variant="h4"
-                  component="div"
-                  sx={{
-                    color: "text.primary",
-                    fontSize: { xs: "1.5rem", sm: "1.8rem", md: "2.2rem" },
-                    fontWeight: "bold",
-                    mb: 2,
+                    maxWidth: 500,
+                    textAlign: "center",
+                    p: 3,
+                    boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)",
+                    borderRadius: "20px",
+                    transition: "transform 0.3s ease",
+                    ":hover": { transform: "scale(1.05)" },
                   }}
                 >
-                  {review.name}
-                </Typography>
-                <Rating
-                  value={review.rating}
-                  readOnly
-                  sx={{
-                    my: 3,
-                    fontSize: { xs: "1.8rem", sm: "2.2rem", md: "2.5rem" },
-                  }}
-                />
-                <Typography
-                  variant="h5"
-                  sx={{
-                    mt: 3,
-                    mb: 5,
-                    color: "text.secondary",
-                    fontSize: { xs: "1.2rem", sm: "1.5rem", md: "1.8rem" },
-                    fontStyle: "italic",
-                    maxWidth: "80%",
-                    margin: "0 auto",
-                  }}
-                >
-                  "{review.comment}"
-                </Typography>
+                  <CardContent>
+                    <Avatar
+                      alt={review.name}
+                      src={review.avatar}
+                      sx={{ width: 100, height: 100, mx: "auto", mb: 2, border: "3px solid #00796b" }}
+                    />
+                    <Typography variant="h5" sx={{ fontWeight: "bold", color: "#00796b", mb: 1, paddingBottom: "20px", }}>
+                      {review.name}
+                    </Typography>
+                    <Rating
+                      value={review.rating}
+                      readOnly
+                      sx={{
+                        "& .MuiRating-iconFilled": { color: "#ff9800" },
+                        fontSize: "2rem",
+                      }}
+                    />
+                    <Typography variant="body1" sx={{ mt: 2, fontStyle: "italic", color: "#666" }}>
+                      "{review.comment}"
+                    </Typography>
+                  </CardContent>
+                </Card>
               </motion.div>
             </Carousel.Item>
           ))}
         </Carousel>
       </Container>
     </Box>
-  )
+  );
 }
 
-export default CustomerReviews
-
+export default CustomerReviews;

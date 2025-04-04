@@ -1,5 +1,5 @@
-// Header.js
 import React, { useState, useEffect } from "react";
+import Tooltip from '@mui/material/Tooltip';
 import {
   AppBar,
   Box,
@@ -10,156 +10,309 @@ import {
   List,
   ListItem,
   ListItemText,
-  Paper,
   Toolbar,
   Typography,
   Badge,
+  useMediaQuery
 } from "@mui/material";
-import { AnimatePresence, motion } from "framer-motion";
-import {
-  ChevronDown,
-  DoorClosedIcon as CloseIcon,
-  MenuIcon,
-  ShoppingCart,
-} from "lucide-react";
+import { motion } from "framer-motion";
+import { X as CloseIcon, MenuIcon, ShoppingBag, LogOut } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import axios from "axios";
 
 function Header(props) {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [activeMenuItem, setActiveMenuItem] = useState(null);
   const [cartItemCount, setCartItemCount] = useState(0);
-
-  const { logout } = useAuth();
+  const { logout, currentUser } = useAuth();
   const navigate = useNavigate();
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
+
+  const fetchCartCount = async () => {
+    if (!currentUser) return;
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/cart/${currentUser.id}`
+      );
+      const cartItems = response.data.items || [];
+      const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+      setCartItemCount(itemCount);
+    } catch (error) {
+      console.error("Error fetching cart count:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCartCount();
+    const interval = setInterval(fetchCartCount, 10000);
+    return () => clearInterval(interval);
+  }, [currentUser]);
+
+  const [reload, setReload] = useState(false);
+
+  useEffect(() => {
+    if (reload) {
+      window.location.reload();
+      setReload(false);
+    }
+  }, [reload]);
+
+  const handleReloadClick = () => {
+    setReload(true);
+  };
+
+  useEffect(() => {
+    const scriptId = "google-translate-script";
+  
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.type = "text/javascript";
+      script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      document.body.appendChild(script);
+    }
+  
+    window.googleTranslateElementInit = () => {
+      const element = document.getElementById("google_translate_element");
+      if (element && element.innerHTML.trim() === "") {
+        const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+        
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,zh-TW,zh-HK",
+            autoDisplay: false,
+          },
+          "google_translate_element"
+        );
+  
+        // Set the language to saved one if it's not English
+        if (savedLanguage !== 'en') {
+          setTimeout(() => {
+            const selectElement = document.querySelector('.goog-te-combo');
+            if (selectElement) {
+              selectElement.value = savedLanguage;
+              selectElement.dispatchEvent(new Event('change'));
+            }
+          }, 1000);
+        }
+      }
+    };
+  
+    const handleLanguageChange = () => {
+      const selectElement = document.querySelector('.goog-te-combo');
+      if (selectElement) {
+        selectElement.addEventListener('change', (e) => {
+          const selectedLanguage = e.target.value;
+          const previousLanguage = localStorage.getItem('selectedLanguage');
+          
+          if (selectedLanguage !== previousLanguage) {
+            localStorage.setItem('selectedLanguage', selectedLanguage);
+            window.location.reload(); // Refresh on language change
+          }
+        });
+      }
+    };
+  
+    // Check for the select element and attach event listener
+    const checkForSelectElement = setInterval(() => {
+      const selectElement = document.querySelector('.goog-te-combo');
+      if (selectElement) {
+        handleLanguageChange();
+        clearInterval(checkForSelectElement);
+      }
+    }, 500);
+  
+    return () => {
+      clearInterval(checkForSelectElement);
+    };
+  }, []);
+  
 
   const handleLogout = () => {
     logout();
+    document.cookie = "googtrans=/en/en; path=/";
+    localStorage.removeItem("selectedLanguage");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+
     navigate("/login");
-  };
-
-  // const menuItems = [
-  //   {
-  //     name: "Shop",
-  //     submenu: ["New Arrivals", "Best Sellers", "Collections", "Customized"],
-  //   },
-  //   { name: "Devices", submenu: ["iPhone", "Samsung",] },
-  //   { name: "About" },
-  //   { name: "Contact" },
-  // ];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-
-    const updateCartCount = () => {
-      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-      setCartItemCount(cart.reduce((total, item) => total + item.quantity, 0));
-    };
-
-    updateCartCount();
-    window.addEventListener("storage", updateCartCount);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("storage", updateCartCount);
-    };
-  }, []);
-
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setDrawerOpen(open);
-  };
-
-  const handleSubmenuClick = (submenuItem) => {
-    // Navigate to a page with filtered products
-    navigate(`/category/${submenuItem.replace(/\s+/g, "-").toLowerCase()}`);
+    window.location.reload();
   };
 
   return (
     <>
-      <motion.div
-        // initial={{ y: -100 }}
-        // animate={{ y: 0 }}
-        // transition={{ type: "spring", stiffness: 120 }}
-      >
-        <AppBar
-          // position="fixed"
-          sx={{
-            background: "rgba(37, 38, 64, 0.9)",
-            // backdropFilter: isScrolled ? "blur(10px)" : "none",
-            // boxShadow: isScrolled ? "0 4px 30px rgba(0, 0, 0, 0.1)" : "none",
-            transition: "all 0.3s ease",
-          }}
-        >
+      <motion.div>
+        <AppBar sx={{ background: "rgb(0, 0, 0)" }}>
           <Container maxWidth="xl">
             <Toolbar sx={{ py: 1, justifyContent: "space-between" }}>
-              {/* Logo */}
+              {/* Logo with Title */}
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                style={{ display: "flex", alignItems: "center", gap: "10px" }}
               >
-                <Typography
-                  variant="h5"
-                  component="div"
-                  sx={{
-                    flexGrow: 1,
+<Box
+      component="img"
+      src="https://ml.globenewswire.com/Resource/Download/548c97b5-1c42-44dc-ab50-a987a585bc91"
+      alt="Logo"
+      width={50}
+      height={50}
+      sx={{
+        width: "50px",
+        height: "50px",
+        '@media (max-width: 400px)': {
+          display: "none",
+        },
+      }}
+    />
+
+                <motion.div
+                  animate={{ y: [0, -5, 5, 0] }}
+                  transition={{ repeat: Infinity, duration: 5 }}
+                  style={{
+                    display: "flex",
+                    gap: "5px",
+                    fontSize: isSmallScreen ? "10px" : "inherit",
                     fontWeight: "bold",
-                    background: "linear-gradient(45deg, #7B68EE, #FF69B4)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
+                    letterSpacing: "1px",
+                    cursor: "pointer"
                   }}
+                  sx={{  '@media (max-width: 320px)': {
+                    width: "10px",
+                    height: "10px",
+                  },
+                  '@media (min-width: 321px) and (max-width: 380px)': {
+                    width: "10px",
+                    height: "10px",
+                  }, }}
                   onClick={() => {
-                    navigate("/");
+                    if (window.location.pathname === "/") {
+                      window.location.reload();
+                    } else {
+                      navigate("/");
+                    }
+                   
+
+
                   }}
                 >
-                  CoverCraft
-                </Typography>
+                  {(isSmallScreen ? "VV Case" : "Vibrant Vibe Cases")
+                    .split(" ")
+                    .map((word, wordIndex) => (
+                      <span key={wordIndex}>
+                        {word.split("").map((letter, index) => (
+                          <motion.span
+                            key={index}
+                            animate={{ y: [0, -10, 0] }}
+                            transition={{
+                              repeat: Infinity,
+                              duration: 1,
+                              delay: index * 0.1,
+                            }}
+                            style={{ display: "inline-block" }}
+                          >
+                            {letter}
+                          </motion.span>
+                        ))}
+                         
+                      </span>
+                    ))}
+                </motion.div>
               </motion.div>
 
               {/* Right Menu */}
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                {/* Cart Icon */}
+              <Box sx={{ display: "flex", alignItems: "center", gap: 0.4 }}>
+                <Tooltip title="Language" placement="bottom">
+                  <Box onClick={handleReloadClick} sx={{ cursor: 'pointer' }}>
+                    <Typography>🌐</Typography>
+                  </Box>
+                </Tooltip>
+                <Box sx={{ display: props.customStyles }}>
+                  <div id="google_translate_element" />
+                  <style>
+                    {`
+                      #google_translate_element select {
+                        background-color: #f5f5f5;
+                        border: 2px solid #007bff;
+                        border-radius: 8px;
+                        padding: 8px;
+                        fontSize: 14px;
+                        color: #333;
+                        outline: none;
+                        transition: all 0.3s ease;
+                      }
+                      #google_translate_element select:hover {
+                        border-color: #0056b3;
+                      }
+                      #google_translate_element select:focus {
+                        border-color: #004085;
+                        box-shadow: 0 0 8px rgba(0, 91, 187, 0.4);
+                      }
+                    `}
+                  </style>
+                </Box>
+                {/* Shopping Bag Icon */}
                 <IconButton
                   color="inherit"
                   component={Link}
                   to="/cart"
-                  sx={{ display: "flex", alignItems: "center" }}
-                  style={{display: props.customStyles,}}
+                  sx={{
+                    transition: "0.3s ease-in-out",
+                    "&:hover": {
+                      boxShadow: "0 0 10px rgba(255, 165, 0, 0.8)",
+                      backgroundColor: "rgba(255, 165, 0, 0.1)",
+                      "& svg": {
+                        color: "orange",
+                      },
+                    },
+                    "& a": {
+                      color: "orange",
+                      textDecoration: "none",
+                    },
+                  }}
                 >
                   <Badge badgeContent={cartItemCount} color="secondary">
-                    <ShoppingCart />
+                    <Box><ShoppingBag /></Box>
                   </Badge>
                 </IconButton>
 
                 {/* Logout Button */}
-                <Button
-                  variant="outlined"
-                  color="error"
-                  onClick={handleLogout}
-                  sx={{
-                    display: { xs: "none", md: "inline-flex" },
-                  }}
-                >
-                  Logout
-                </Button>
+                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                  <Button
+                    variant="outlined"
+                    onClick={handleLogout}
+                    sx={{
+                      border: "2px solid #ff9800",
+                      color: "#ff9800",
+                      fontWeight: "bold",
+                      textTransform: "uppercase",
+                      transition: "0.3s",
+                      background: "rgba(255, 152, 0, 0.1)",
+                      boxShadow: "0 0 10px rgba(255, 152, 0, 0.5)",
+                      "@media (max-width: 678px)": {
+                        display: "none",
+                      },
+                      "&:hover": {
+                        color: "white",
+                        backgroundColor: "rgba(255, 152, 0, 0.8)",
+                        boxShadow: "0 0 20px rgba(255, 152, 0, 0.9)",
+                        "@media (max-width: 678px)": {
+                          fontSize: "20px",
+                        },
+                      },
+                      minWidth: "auto",
+                      padding: isSmallScreen ? "8px" : "8px 16px",
+                    }}
+                  >
+                    {isSmallScreen ? <LogOut size={10} /> : <span>Logout</span>}
+                  </Button>
+                </motion.div>
 
                 {/* Mobile Menu Button */}
                 <Box sx={{ display: { xs: "block", md: "none" } }}>
-                  <IconButton
-                    color="inherit"
-                    onClick={toggleDrawer(true)}
-                    sx={{ ml: 1 }}
-                  >
+                  <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
                     <MenuIcon />
                   </IconButton>
                 </Box>
@@ -173,37 +326,23 @@ function Header(props) {
       <Drawer
         anchor="right"
         open={drawerOpen}
-        onClose={toggleDrawer(false)}
+        onClose={() => setDrawerOpen(false)}
         PaperProps={{
           sx: {
             width: "100%",
             maxWidth: 350,
-            background: "rgba(37, 38, 64, 0.98)",
+            background: "rgba(30, 30, 45, 0.98)",
             backdropFilter: "blur(10px)",
           },
         }}
       >
         <Box sx={{ p: 2 }}>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              mb: 2,
-            }}
-          >
-            <Typography variant="h6" sx={{ color: "white" }}>
-              Menu
-            </Typography>
-            <IconButton
-              color="inherit"
-              onClick={toggleDrawer(false)}
-              style={{ width: "80px" }}
-            >
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
+            <Typography variant="h6" sx={{ color: "white" }}>Menu</Typography>
+            <IconButton color="inherit" onClick={() => setDrawerOpen(false)}>
               <CloseIcon />
             </IconButton>
           </Box>
-
           <List>
             <ListItem button onClick={handleLogout}>
               <ListItemText primary="Logout" sx={{ color: "white" }} />

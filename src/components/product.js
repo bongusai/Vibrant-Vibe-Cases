@@ -21,7 +21,6 @@ import SAM3 from "../assets/MobileCovers/SAM-3.jpg";
 
 export const products = [
   {
-    id: 1,
     name: "Abstract Seamless Grunge Snap Case for Google Pixel 6 Pro",
     model: "Google Pixel 6 Pro",
     image: GG,
@@ -30,7 +29,6 @@ export const products = [
     discountPrice: "1350",
   },
   {
-    id: 2,
     name: "Aeroplane vector Snap Case for Google Pixel 6 Pro",
     model: "Google Pixel 6 Pro",
     image: GG1,
@@ -40,7 +38,6 @@ export const products = [
     discountPrice: "1260",
   },
   {
-    id: 3,
     name: "Alcohol Ink Colors Snap Case for Google Pixel 6 Pro",
     model: "Google Pixel 6 Pro",
     image: GG2,
@@ -50,7 +47,6 @@ export const products = [
     discountPrice: "1439",
   },
   {
-    id: 4,
     name: "All Your Way Up Positive Glossy Metal Phone Cover for Google Pixel 6 Pro",
     model: "Google Pixel 6 Pro",
     image: GG3,
@@ -60,7 +56,6 @@ export const products = [
     discountPrice: "1709",
   },
   {
-    id: 5,
     name: "Arcane Eye Snap Case for Google Pixel 6 Pro",
     model: "Google Pixel 6 Pro",
     image: GG4,
@@ -70,7 +65,6 @@ export const products = [
     discountPrice: "1169",
   },
   {
-    id: 6,
     name: "Art Toy Snap Case for Google Pixel 6 Pro",
     model: "Google Pixel 6 Pro",
     image: GG5,
@@ -80,7 +74,6 @@ export const products = [
     discountPrice: "1484",
   },
   {
-    id: 7,
     name: "01 Number Snap Case for Apple Iphone 15",
     model: "Apple Iphone 15",
     image: Iphone15,
@@ -90,7 +83,6 @@ export const products = [
     discountPrice: "1349",
   },
   {
-    id: 8,
     name: "3D Wall Art Snap Case for Apple Iphone 15",
     model: "Apple Iphone 15",
     image: Iphone15One,
@@ -100,7 +92,6 @@ export const products = [
     discountPrice: "1619",
   },
   {
-    id: 9,
     name: "Abstract Art Glossy Metal TPU Phone Cover for Apple Iphone 15",
     model: "Apple Iphone 15",
     image: Iphone15Two,
@@ -110,7 +101,6 @@ export const products = [
     discountPrice: "1799",
   },
   {
-    id: 10,
     name: "Abstract Leaf Design Snap Case for Apple Iphone 15",
     model: "Apple Iphone 15",
     image: Iphone15Three,
@@ -120,7 +110,6 @@ export const products = [
     discountPrice: "1979",
   },
   {
-    id: 11,
     name: "Abstract Seamless Grunge Snap Case for Apple Iphone 15",
     model: "Apple Iphone 15",
     image: Iphone15Four,
@@ -130,7 +119,6 @@ export const products = [
     discountPrice: "1214",
   },
   {
-    id: 12,
     name: "01 Number Snap Case for Oneplus 12 (5G)",
     model: "Oneplus 12",
     image: OP,
@@ -140,7 +128,6 @@ export const products = [
     discountPrice: "1574",
   },
   {
-    id: 13,
     name: "Abstract Art Glossy Metal TPU Phone Cover for Oneplus 12 (5G)",
     model: "Oneplus 12",
     image: OP1,
@@ -150,7 +137,6 @@ export const products = [
     discountPrice: "1349",
   },
   {
-    id: 14,
     name: "Abstract Art Of Nature Snap Case for Oneplus 12 (5G)",
     model: "Oneplus 12",
     image: OP2,
@@ -160,7 +146,6 @@ export const products = [
     discountPrice: "1394",
   },
   {
-    id: 15,
     name: "Abstract Background Glossy Metal Phone Cover for Oneplus 12 (5G)",
     model: "Oneplus 12",
     image: OP3,
@@ -170,7 +155,6 @@ export const products = [
     discountPrice: "1529",
   },
   {
-    id: 16,
     name: "Abstract Leaf Art Snap Case for Oneplus 12 (5G)",
     model: "Oneplus 12",
     image: OP4,
@@ -180,7 +164,6 @@ export const products = [
     discountPrice: "1259",
   },
   {
-    id: 17,
     name: "Abstract Herringbone Motif Snap Case for Samsung Galaxy S23 (5G)",
     model: "Samsung Galaxy S23",
     image: SAM,
@@ -190,7 +173,6 @@ export const products = [
     discountPrice: "1664",
   },
   {
-    id: 18,
     name: "Abstract Liquid Colors Snap Case for Samsung Galaxy S23 (5G)",
     model: "Samsung Galaxy S23",
     image: SAM1,
@@ -200,7 +182,6 @@ export const products = [
     discountPrice: "1529",
   },
   {
-    id: 19,
     name: "Abstract Mosaic Seamless Glossy Metal Phone Cover for Samsung Galaxy S23 (5G)",
     model: "Samsung Galaxy S23",
     image: SAM2,
@@ -210,7 +191,6 @@ export const products = [
     discountPrice: "1439",
   },
   {
-    id: 20,
     name: "Abstract Multicolor Seamless Snap Case for Samsung Galaxy S23 (5G)",
     model: "Samsung Galaxy S23",
     image: SAM3,
